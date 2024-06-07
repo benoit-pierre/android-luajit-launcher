@@ -95,6 +95,7 @@ class Assets {
                                         if (array.size == 2) {
                                             val link = "$filesDir/${array[0]}"
                                             val file = "$nativeLibsDir/${array[1]}"
+                                            Log.v(tag, "Symlink $file to $link")
                                             File(file).symlink(link)
                                         }
                                     } catch (e: Exception) {
