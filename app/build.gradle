@@ -1,6 +1,5 @@
 //file:noinspection GrDeprecatedAPIUsage
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
     namespace = 'org.koreader.launcher'
@@ -60,8 +59,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = '17'
+    kotlin {
+	compilerOptions {
+	    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+	}
     }
 
     flavorDimensions = [ 'ABI', 'CHANNEL'  ]
@@ -121,11 +122,13 @@ android {
     androidResources {
         noCompress '7z'
     }
+}
 
-    applicationVariants.configureEach { variant ->
-        variant.outputs.configureEach {
-            outputFileName = "NativeActivity.apk"
-        }
+androidComponents {
+    onVariants(selector().all()) {
+	outputs.forEach {
+	    it.outputFileName.set("NativeActivity.apk")
+	}
     }
 }
 
